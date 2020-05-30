@@ -34,25 +34,28 @@ public class HotelsResultsPage {
 
     public boolean setFilter() {
         WebElement slider = pageDriver.findElements(
-                By.xpath("//div[contains(@role,'slider')]")).get(1);
+                By.xpath("//div[contains(@role,'slider')]")).get(0);
         if (slider == null) {
             return false;
         } else {
-            Logger.log("Max value before : " + getMaxValue());
+            Logger.log("Min value before : " + getMinValue());
             Actions move = new Actions(pageDriver);
-            do {
+            move.dragAndDropBy(slider, 5, 0).click();
+            move.build().perform();
+            Web.waitForCompletion();
+            /*do {
                 if (getMaxValue().equals("3000")) {
                     break;
                 }
-                move.dragAndDropBy(slider, -20, 0).click();
+                *//*move.dragAndDropBy(slider, -20, 0).click();
                 move.build().perform();
-                Web.waitForCompletion();
+                Web.waitForCompletion();*//*
             } while (Integer.parseInt(getMaxValue()) != 3000);
-            /*move.dragAndDropBy(slider, -15, 0).click();
+            *//*move.dragAndDropBy(slider, -15, 0).click();
             move.build().perform();
             Web.waitForCompletion();*/
-            Logger.log("Max value after : " + getMaxValue());
-            return getMaxValue().equals("3000");
+            Logger.log("Min value after : " + getMinValue());
+            return getMinValue().equals("1000");
         }
     }
 

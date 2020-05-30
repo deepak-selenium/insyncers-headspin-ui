@@ -41,9 +41,10 @@ public class HotelDetailsPage {
         details.forEach(Logger::log);
     }
 
-    public boolean selectRoom(int roomNumber) {
-        roomNumber = roomNumber == 0 ? 0 : roomNumber - 1;
-        return Web.click(pageDriver, pageDriver.findElements(
-                By.xpath("//a[contains(text(),'SELECT ROOM')]")).get(roomNumber));
+    public boolean selectFirstRoom() {
+        Web.waitForCompletion();
+        List<WebElement> buttons = pageDriver.findElements(
+                By.xpath("//a[contains(@class,'appendBottom') and contains(text(),'SELECT ROOM')]"));
+        return buttons != null && Web.click(pageDriver, buttons.get(0));
     }
 }

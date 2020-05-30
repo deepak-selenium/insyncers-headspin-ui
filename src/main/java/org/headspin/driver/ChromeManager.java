@@ -1,6 +1,5 @@
 package org.headspin.driver;
 
-import com.google.common.io.Resources;
 import org.headspin.utils.Logger;
 import org.headspin.utils.Reader;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
@@ -42,7 +41,7 @@ public class ChromeManager extends DriverManager {
     protected void startLocalRun() {
         Logger.log("Starting chrome in local mode");
         System.setProperty("webdriver.chrome.driver",
-                Resources.getResource("chromedriver").getPath());
+                System.getProperty("user.dir") + "/src/main/java/org/headspin/resources/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
         options.addArguments("disable-infobars");

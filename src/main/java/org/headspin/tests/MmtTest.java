@@ -1,15 +1,20 @@
 package org.headspin.tests;
 
-import org.headspin.pom.BookingPage;
-import org.headspin.pom.HotelDetailsPage;
-import org.headspin.pom.HotelsResultsPage;
-import org.headspin.pom.LandingPage;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.headspin.pom.*;
 import org.headspin.utils.Logger;
+import org.headspin.utils.Reader;
 import org.headspin.utils.Web;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class MmtTest extends BaseTest {
+
+    String firstName = "Headspin";
+    String lastName = "Hackathon";
+    String phoneNum = RandomStringUtils.randomNumeric(10);
 
     @Test(description = "Login To Make my trip")
     public void loginToMmt() {
@@ -52,6 +57,31 @@ public class MmtTest extends BaseTest {
         HotelDetailsPage detailsPage = new HotelDetailsPage(chromeDriver);
         Assert.assertTrue(detailsPage.clickRooms());
         detailsPage.publishRoomDetails(1);
-        Assert.assertTrue(detailsPage.selectRoom(1));
+        Assert.assertTrue(detailsPage.selectFirstRoom());
+        Web.waitForCompletion();
+
+        //pay now
+        JourneyDetailsPage journeyDetailsPage = new JourneyDetailsPage(chromeDriver);
+        journeyDetailsPage.dismissDialog();
+        journeyDetailsPage.fillTravellerDetails(firstName, lastName);
+        journeyDetailsPage.fillPhoneNumber(phoneNum);
+
+        Assert.assertTrue(journeyDetailsPage.selectCommonRequestedOptions());
+        Assert.assertTrue(journeyDetailsPage.uncheckDonation());
+        Assert.assertTrue(journeyDetailsPage.clickPayNowButton());
+        Web.waitForCompletion();
+        journeyDetailsPage.dismissDialog();
+
+        //Match previous details
+        List<String> allEntries = Web.getClicks();
+        Logger.log("All texts captured ____________");
+        allEntries.forEach(Logger::log);
+        Logger.log("_______________________________");
+
+        BookingSummaryPage summaryPage = new BookingSummaryPage(chromeDriver);
+        Assert.assertTrue(allEntries.contains(summaryPage.getHotelName()));
+        Assert.assertTrue(summaryPage.getName().equalsIgnoreCase(firstName + " " + lastName));
+        Assert.assertEquals(summaryPage.getMobileNumberAndEmail().split(",")[0], Reader.getProperty("web.user.name"));
+        Assert.assertEquals(summaryPage.getMobileNumberAndEmail().split(",")[1], phoneNum);
     }
 }
