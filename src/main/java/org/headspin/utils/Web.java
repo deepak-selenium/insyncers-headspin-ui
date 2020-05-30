@@ -5,6 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public class Web {
 
     public static boolean click(WebDriver driver, WebElement element) {
@@ -31,15 +35,20 @@ public class Web {
         actions.moveToElement(element).perform();
     }
 
-    public static void waitForCommandToFinish() {
+    public static boolean back(WebDriver driver) {
+        return click(driver, driver.findElement(By.xpath("//button[contains(@mattooltip,'Back')]")));
+    }
+
+    public static List<String> getValues(WebDriver driver, By loc, Function<WebElement, String> pred) {
+        List<WebElement> elements = driver.findElements(loc);
+        return elements.stream().map(pred).collect(Collectors.toList());
+    }
+
+    public static void waitForCompletion() {
         try {
             Thread.sleep(3 * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public static boolean back(WebDriver driver) {
-        return click(driver, driver.findElement(By.xpath("//button[contains(@mattooltip,'Back')]")));
     }
 }

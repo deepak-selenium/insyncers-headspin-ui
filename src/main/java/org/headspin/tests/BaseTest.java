@@ -42,17 +42,4 @@ public class BaseTest {
             chromeDriver.quit();
         }
     }
-
-    public void waitForCompletion() {
-        try {
-            Thread.sleep(5 * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void waitForClick(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(chromeDriver, 10);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
 }
