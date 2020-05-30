@@ -42,7 +42,7 @@ public class ChromeManager extends DriverManager {
     protected void startLocalRun() {
         Logger.log("Starting chrome in local mode");
         System.setProperty("webdriver.chrome.driver",
-                Resources.getResource("chromedriver").getPath());
+                Resources.getResource("chromedriver.exe").getPath());
         ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
         options.addArguments("disable-infobars");
