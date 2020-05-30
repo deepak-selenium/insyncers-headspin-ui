@@ -1,0 +1,11 @@
+.idea/
+*.iml
+report/
+target/
+logs/
+allure-results/
+screenshots/
+*chromedriver*
+~
+
+
