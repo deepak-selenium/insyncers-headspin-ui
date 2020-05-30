@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-public class WebUtil {
+public class Web {
 
     public static boolean click(WebDriver driver, WebElement element) {
         boolean success;

@@ -3,7 +3,7 @@
 <suite name="AndroidNativeSuite" verbose="1">
     <test name="Login">
         <classes>
-<!--            <class name="org.headspin.testng.tests.BookBusSeatBookingAllowedTest"/>-->
+<!--            <class name="org.headspin.testTransformer.tests.BookBusSeatBookingAllowedTest"/>-->
         </classes>
     </test>
 </suite>
