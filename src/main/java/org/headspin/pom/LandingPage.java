@@ -52,4 +52,12 @@ public class LandingPage {
         }
         return Web.click(pageDriver, pageDriver.findElement(By.xpath("//span[text()='Login']/..")));
     }
+
+    public boolean dismissOtp() {
+        try {
+            return Web.click(pageDriver, pageDriver.findElement(By.xpath("//span[contains(@class,'popupCrossIcon')]")));
+        } catch (Exception ignore) {
+            return true;
+        }
+    }
 }
