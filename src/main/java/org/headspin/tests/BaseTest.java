@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     DriverManager driverManager;
-    private WebDriver chromeDriver;
+    protected WebDriver chromeDriver;
     private boolean enableCloudRun = Reader.getProperty("test.mode.cloud").equalsIgnoreCase("true");
 
 

@@ -5,7 +5,4 @@ target/
 logs/
 allure-results/
 screenshots/
-*chromedriver*
-~
-
 
