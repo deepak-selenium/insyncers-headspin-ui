@@ -5,4 +5,5 @@ target/
 logs/
 allure-results/
 screenshots/
+*chrmedriver*
 
