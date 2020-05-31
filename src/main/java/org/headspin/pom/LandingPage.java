@@ -57,7 +57,7 @@ public class LandingPage {
         try {
             return Web.click(pageDriver, pageDriver.findElement(By.xpath("//span[contains(@class,'popupCrossIcon')]")));
         } catch (Exception ignore) {
-            return true;
+            return Web.click(pageDriver, pageDriver.findElement(By.xpath("//a[contains(text(),'Back')]")));
         }
     }
 }

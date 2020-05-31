@@ -14,22 +14,22 @@ public class BookingSummaryPage {
     }
 
     public String getHotelName() {
-        return pageDriver.findElements(By.xpath("//div[@class='pull-left hotel_leftpart']//p")).get(0).getText();
+        return pageDriver.findElements(By.xpath("//div[@class='pull-left hotel_leftpart']//p")).get(0).getText().trim();
     }
 
     public String getCheckinDate() {
-        return pageDriver.findElements(By.xpath("//div[@class='checkin pull-left']//span")).get(0).getText();
+        return pageDriver.findElements(By.xpath("//div[@class='checkin pull-left']//span")).get(0).getText().trim();
     }
 
     public String getCheckoutDate() {
-        return pageDriver.findElements(By.xpath("//div[@class='checkin pull-right']//span")).get(0).getText();
+        return pageDriver.findElements(By.xpath("//div[@class='checkin pull-right']//span")).get(0).getText().trim();
     }
 
     public String getName() {
-        return pageDriver.findElements(By.xpath("//div[@class='traveler_details clearfix']//p")).get(0).getText();
+        return pageDriver.findElements(By.xpath("//div[@class='traveler_details clearfix']//p")).get(0).getText().trim();
     }
 
     public String getMobileNumberAndEmail() {
-        return pageDriver.findElements(By.xpath("//div[@class='traveler_details clearfix']//p")).get(1).getText();
+        return pageDriver.findElements(By.xpath("//div[@class='traveler_details clearfix']//p")).get(1).getText().trim();
     }
 }

@@ -2,27 +2,31 @@ package org.headspin.tests;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.headspin.pom.*;
+import org.headspin.testTransformer.WebListener;
 import org.headspin.utils.Logger;
 import org.headspin.utils.Reader;
 import org.headspin.utils.Web;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
+@Listeners(WebListener.class)
 public class MmtTest extends BaseTest {
 
     String firstName = "Headspin";
     String lastName = "Hackathon";
-    String phoneNum = RandomStringUtils.randomNumeric(10);
+    String phoneNum = "9" + RandomStringUtils.randomNumeric(9);
 
     @Test(description = "Login To Make my trip")
     public void loginToMmt() {
+        WebListener.driver = chromeDriver;
         LandingPage landingPage = new LandingPage(chromeDriver);
         Assert.assertTrue(landingPage.clickLoginLink(), "Failed to click login link");
         if (landingPage.validateLoginPopUp()) {
             Logger.log("Login popup found");
-            Assert.assertTrue(landingPage.enterUserName());
+            Assert.assertTrue(landingPage.enterUserName(), "Failed to enter user name");
             try {
                 landingPage.enterPassword();
             } catch (Exception ignore) {
@@ -36,8 +40,8 @@ public class MmtTest extends BaseTest {
     @Test(description = "Hotel selection", dependsOnMethods = {"loginToMmt"})
     public void selectHotel() {
         BookingPage bookingPage = new BookingPage(chromeDriver);
-        Assert.assertTrue(bookingPage.clickHotels());
-        Assert.assertTrue(bookingPage.selectCity("Bangalore"));
+        Assert.assertTrue(bookingPage.clickHotels(), "Hotel click failed");
+        Assert.assertTrue(bookingPage.selectCity("Bangalore"), "Failed to set city");
         Assert.assertTrue(bookingPage.selectLeisure());
         Assert.assertTrue(bookingPage.clickSearchButton());
         Web.waitForCompletion();
@@ -73,15 +77,19 @@ public class MmtTest extends BaseTest {
         journeyDetailsPage.dismissDialog();
 
         //Match previous details
-        List<String> allEntries = Web.getClicks();
-        Logger.log("All texts captured ____________");
-        allEntries.forEach(Logger::log);
-        Logger.log("_______________________________");
-
+        Set<String> allEntries = Web.getClicks();
         BookingSummaryPage summaryPage = new BookingSummaryPage(chromeDriver);
-        Assert.assertTrue(allEntries.contains(summaryPage.getHotelName()));
+        boolean hotelFound = false;
+        for (String s : allEntries) {
+            if (s.contains(summaryPage.getHotelName())) {
+                hotelFound = true;
+                break;
+            }
+        }
+        Assert.assertTrue(hotelFound);
+        Assert.assertEquals(summaryPage.getMobileNumberAndEmail().split(",")[1].trim(),
+                Reader.getProperty("web.user.name").trim());
+        Assert.assertEquals(summaryPage.getMobileNumberAndEmail().split(",")[0].trim(), phoneNum);
         Assert.assertTrue(summaryPage.getName().equalsIgnoreCase(firstName + " " + lastName));
-        Assert.assertEquals(summaryPage.getMobileNumberAndEmail().split(",")[0], Reader.getProperty("web.user.name"));
-        Assert.assertEquals(summaryPage.getMobileNumberAndEmail().split(",")[1], phoneNum);
     }
 }

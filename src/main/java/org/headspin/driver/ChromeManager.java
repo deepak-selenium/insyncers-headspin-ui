@@ -16,7 +16,7 @@ import java.util.Map;
 public class ChromeManager extends DriverManager {
 
     private static String BROWSER_NAME = "chrome";
-    private static String CLOUD_BROWSER_VERSION = "79.0.3945.88";
+    private static String CLOUD_BROWSER_VERSION = Reader.getProperty("test.chrome.ver");
     private static String TOKEN = "cdb27f30dc594c05b393e1b5c456a038";
 
     @Override
