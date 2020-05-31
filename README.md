@@ -1,6 +1,8 @@
 Automation Framework for Headspin hackathon:
 ---------------------------------------------
 
+FYI : We have used ubuntu as our base os for developing this framwork.
+
 1. There are two run modes in this framework i.e local || cloud
 
 2. These settings can be done in "project.properties" file with respect to below field
